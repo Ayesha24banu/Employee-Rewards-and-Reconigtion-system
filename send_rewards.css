@@ -1,0 +1,296 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+header {
+    margin-top: -22px;
+    line-height: 0.4; /* Decrease line height */
+    font-size: 1.5em;
+    text-align: center;
+    padding: 20px;
+    background-color: #343a40;
+    color: white;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2px;
+}
+
+.left-side, .right-side {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Form Container Styles */
+
+.send-rewards-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 35%;
+    margin-top: 10px;  /* Adjust this value to move the container down */
+    max-width: 550px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    z-index: 1;
+    }
+  
+
+  .send-rewards-container h2 {
+    text-align: center;
+    color:#007bff;
+    margin-top: 5px;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .h1{
+    text-align: center;
+
+  }
+
+  p{
+    text-align: center;
+    font-size: 1.5em;
+  }
+  .center {
+    flex: 2;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+   
+}   
+
+.background-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+.left-image {
+    width: 100%;
+    height: auto;
+    margin-top: -2px;
+
+}
+
+.rewards-section {
+    display: none;
+}
+
+.rewards-section.active {
+    display: block;
+}
+
+.points-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: -5px;
+    font-size: 0.9em;
+    font-weight: bold; 
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Horizontally center the items */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #ffffff; /* Background color similar to the image */
+    border-radius: 5px;
+    margin-bottom: 0px;
+}
+
+.account-link img {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 40%; /* Make the image round */
+    margin-right: 25px; /* Space between the image and text */
+}
+
+.account-link i {
+    color: #333;
+    font-size: 1.3rem; /* Size of the down arrow */
+}
+
+.account-link a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 10px; /* Space between the name and the arrow */
+}
+
+.account-link:hover {
+    background-color:#17a2b8; /* Change color on hover */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 5px;
+}
+
+form input, form textarea, form button {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 17px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.leaderboard-tables-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leaderboard-section {
+    margin-top: -5px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+.leaderboard-section h2 {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #343a40;
+    padding-bottom: 5px;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+    border: 2px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.leaderboard-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.leaderboard-table td {
+    background-color: #f8f9fa;
+}
+
+.leaderboard-table th.user-column, .leaderboard-table td.user-column {
+    width: 41%; /* Adjust this value to set the desired ranking column width */
+    text-align: center;
+}
+
+.modal {
+    display: none;/* Hidden by default */
+    position: fixed;/* Stay in place */
+    z-index: 1000;/* Sit on middle */
+    left: 0;
+    top: 0;
+    width: 100%;/* Full width */
+    height: 100%;/* Full height */
+    overflow: auto;/* Enable scroll if needed */
+    background-color: rgb(0,0,0);/* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;/* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px;/* Max width of modal */
+    text-align: center;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content.success {
+    border-color: #28a745;
+    background-color: #28a745;
+    color: #ddd;
+}
+
+.modal-content.error {
+    border-color: #dc3545;
+    color: #ddd;
+    background-color: #dc3545;
+}
+
+.modal-content.info {
+    border-color: #17a2b8;
+    color: #ddd;
+    background-color: #17a2b8;
+}
+
+.modal-content.warning {
+    border-color:#FF7900;
+    background-color: #FF7900;
+    color: #ddd;
+}

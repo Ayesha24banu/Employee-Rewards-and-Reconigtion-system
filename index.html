@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Employee Rewards and Recognition</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="index-body">
+    <div class="index-container-wrapper">
+        <div class="index-container">
+            <header>
+                <img src="{{ url_for('static', filename='image/logo3.png') }}" alt="Logo">
+                <h1>Empowering Employees Through</h1>
+                <h1>Rewards and Recognition</h1>
+                <h2>Welcome to Rewards</h2>
+                <p>Use this platform to reward your colleagues for their hard work and dedication.</p>
+                <p>Please Register or Login to continue.</p>
+            </header>
+                <div class="button-container">
+                <a href="{{ url_for('sign_in') }}" class="btn small-btn">Register</a>
+                <a href="{{ url_for('login') }}" class="btn small-btn">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

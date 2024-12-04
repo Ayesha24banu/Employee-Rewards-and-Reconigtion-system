@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign in</title>
+    <style>
+        .toggle-password {
+          cursor: pointer;
+          position: absolute;
+          right: 10px;
+          top: 10px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="sign_in-body">
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='image/logo4.png') }}" alt="Logo" class="logo">
+    </div>
+    <div class="sign_in-container">
+        <header>
+            <h1>Employee Registration</h1>
+            <p style="text-align: center;">Please fill in this form to create an account.</p>
+         </header>
+
+         <form method="POST" action="{{ url_for('sign_in') }}" class="sign_in-form" enctype="multipart/form-data">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="password">Password:</label><br>
+            <div style="position: relative;">
+                <input type="password" name="password" id="password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                    <i id="togglePasswordIcon" class="fa fa-eye-slash"></i>
+                </span>
+            </div>
+            
+            <label for="profile_picture">Upload Picture:</label><br>
+            <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required><br>
+
+            <label for="first_name">First Name:</label><br>
+            <input type="text" id="first_name" name="first_name" required><br>
+
+            <label for="last_name">Last Name:</label><br>
+            <input type="text" id="last_name" name="last_name" required><br>
+
+            <label for="email_id">Email ID:</label><br>
+            <input type="email" id="email_id" name="email_id" required><br>
+
+            <label for="department">Department:</label><br>
+            <input type="text" id="department" name="department" required><br>
+
+            <!-- Hidden fields for points -->
+            <input type="hidden"  id="manager_points" name="manager_points" value="200" readonly><br>
+            <input type="hidden" id="available_points" name="available_points" value="150" readonly><br>
+            <input type="hidden" id="received_points" name="received_points" value="0">  
+
+            <p style="margin-top:-25px;">By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+            <div class="button-container">
+                <button type="submit" class="btn small-btn">Register</button>
+                <a href="{{ url_for('index') }}" class="btn small-btn cancel-btn">Cancel</a>
+            </div>
+        </form>    
+            <p style="text-align: center;">Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+        
+        <script>
+        function togglePasswordVisibility(passwordFieldId) {
+          const passwordField = document.getElementById(passwordFieldId);
+          const icon = document.getElementById('togglePasswordIcon');
+          if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          }
+        }
+        </script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </div>
+    <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="flashMessage"></p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+                    if (flashMessages.length > 0) {
+                        const modal = document.getElementById('flashModal');
+                        const flashMessageElement = document.getElementById('flashMessage');
+                        const span = document.getElementsByClassName('close')[0];
+
+                        flashMessages.forEach(([category, message]) => {
+                            flashMessageElement.textContent = message;
+                            const modalContent = document.querySelector('.modal-content');
+                            modalContent.classList.remove('success', 'error', 'warning', 'info');
+                            modalContent.classList.add(category);
+                            modal.style.display = 'block';
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = 'none';
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 5000); // Display for 5 seconds
+                    }
+                });
+    </script>
+</body>
+</html>

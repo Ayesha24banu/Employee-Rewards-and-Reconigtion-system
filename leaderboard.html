@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Leader Board</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="leaderboard-body">
+    <div class="leaderboard-container">
+        <header class="leaderboard-header">
+            <img src="{{ url_for('static', filename='image/symbol2.png') }}" class="left-symbol" alt="Left Symbol">
+            <h1 class="leaderboard-title">LEADERBOARD</h1>
+            <img src="{{ url_for('static', filename='image/symbol2.png') }}" class="right-symbol" alt="Right Symbol">
+        </header> 
+        {% if is_admin %}
+        <a href="{{ url_for('admin') }}"  style="float:right;" class="back-link">Back to Admin Page</a>
+        {% else %}
+        <a href="{{ url_for('send_rewards') }}"  style="float:right;" class="back-link">Back to Rewards Page</a>
+        {% endif %}
+        <div class="leaderboard-tables-container">
+        <div class="leaderboard-section">     
+            <h2>Top Scorers</h2>
+            <div class="table-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th class="ranking-column">Ranking</th>
+                        <th>Username</th>
+                        <th class="points-column">Total Points Received</th>
+                    </tr>
+                </thead> 
+                <tbody>   
+                    {% for scorer in top_scorers %}
+                    <tr>
+                        <td class="ranking-column">{{ loop.index }}</td>
+                        <td>{{ scorer.username }}</td>
+                        <td class="points-column">{{ scorer.total_points_received }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>    
+            </table>
+        </div>
+        </div>
+        <div class="leaderboard-section">
+            <h2>Most Points Sending Users </h2>
+            <div class="table-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th class="ranking-column">Ranking</th>
+                        <th>Username</th>
+                        <th class="points-column">Send Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sender in most_sending_users %}
+                    <tr>
+                        <td class="ranking-column">{{ loop.index }}</td>
+                        <td>{{ sender.username }}</td>
+                        <td class="points-column">{{ sender.send_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> 
+        </div>  
+    </div>
+    </div>
+</body>
+</html>

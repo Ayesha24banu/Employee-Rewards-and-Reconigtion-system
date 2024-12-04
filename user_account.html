@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='image/reward.png') }}" alt="reward" class="left-image">
+        <h1>User Account</h1>
+        <h2>Hello, {{ user['first_name'] }}</h2>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('send_rewards') }}" class="send-rewards">Send Rewards</a></li>
+                <li><a href="{{ url_for('logout') }}"  class="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="profile-info">
+        <section>
+            <h2>Profile Information</h2>
+                {% if user['picture'] %}
+                    <img src="{{ url_for('static', filename='uploads/profile_pictures/' + user['picture']) }}" alt="Profile Picture" width="150">
+                {% else %}
+                    <p>No profile picture available.</p>
+                {% endif %}
+            
+            <p><strong>Username:</strong> {{ user['username'] }}</p>
+            <p><strong>First Name:</strong> {{ user['first_name'] }}</p>
+            <p><strong>Last Name:</strong> {{ user['last_name'] }}</p>
+            <p><strong>Email:</strong> {{ user['email_id'] }}</p>
+            <p><strong>Department:</strong> {{ user['department'] }}</p>
+            {% if user['manager'] == 'yes' %}
+            <p><strong>Available Points:</strong> {{ user['manager_points'] }}</p>
+            {% else %}
+            <p><strong>Available Points:</strong> {{ user['available_points'] }}</p>
+            {% endif %}
+            <p><strong>Received Points:</strong> {{ user['received_points'] }}</p>
+            <p><strong>Redeemed Points:</strong> {{ redeem['redeem_points'] }}</p>
+        </section>
+        </div>
+
+        <div class="update-profile">
+        <section>
+            <h2>Update Profile</h2>
+            
+            <form action="{{ url_for('update_profile') }}" method="post" enctype="multipart/form-data">
+
+                <label for="profile_picture">Profile Picture:</label>
+                <input type="file" id="profile_picture" name="profile_picture">
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ user['first_name'] }}" required>
+                
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ user['last_name'] }}" required>
+                
+                <label for="email_id">Email:</label>
+                <input type="email" id="email_id" name="email_id" value="{{ user['email_id'] }}" required>
+                
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" value="{{ user['department'] }}" required>
+                
+                <input type="submit" value="Update Profile">
+            </form>
+        </section>
+        </div>
+        
+        <div class="change-password">
+        <section>
+            <h2>Change Password</h2>
+            <form action="{{ url_for('change_password') }}" method="post">
+                <div style="position: relative;">
+                <label for="current_password" class="change-password-label">Current Password:</label>
+                <input type="password" id="current_password" name="current_password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('current_password')">
+                    <i id="togglePasswordIcon" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+
+                <div style="position: relative;">
+                <label for="new_password" class="change-password-label">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('mew_password')">
+                    <i id="togglePasswordIcon" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+
+                <div style="position: relative;">
+                <label for="confirm_password" class="change-password-label">Confirm New Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')">
+                    <i id="togglePasswordIcon" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+                
+                <input type="submit" value="Change Password">
+            </form>
+        </section>
+        </div>
+    </main>
+    <!-- Flash Message Modal -->
+    <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="flashMessage"></p>
+        </div>
+    </div>
+      <!-- JavaScript for Password Toggle and Flash Modal -->
+      <script>
+        function togglePasswordVisibility(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('i');
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+            if (flashMessages.length > 0) {
+                const modal = document.getElementById('flashModal');
+                const flashMessageElement = document.getElementById('flashMessage');
+                const span = document.getElementsByClassName('close')[0];
+
+                flashMessages.forEach(([category, message]) => {
+                    flashMessageElement.textContent = message;
+                    const modalContent = document.querySelector('.modal-content');
+                    modalContent.classList.remove('success', 'error', 'warning', 'info');
+                    modalContent.classList.add(category);
+                    modal.style.display = 'block';
+                });
+
+                span.onclick = function() {
+                    modal.style.display = 'none';
+                }
+
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 8000); // Display for 5 seconds
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</body>
+</html>

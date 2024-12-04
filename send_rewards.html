@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Send Rewards</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='send_rewards.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="send_rewards-body">
+    <div class="background">
+        <img src="{{ url_for('static', filename='image/background3.png') }}" alt="Background" class="background-image">
+        <header>
+            <h1>Rewards</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('send-rewards')">Home</a></li>
+                    <li><a href="#" onclick="showSection('leaderboard')">Leaderboard</a></li>
+                    <li><a href="#" onclick="showSection('redeem')">Redeem</a></li>
+                    <li><a href="#" onclick="showSection('help')">Help</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="left-side">
+                <div class="account-link">
+                {% if user['picture'] %}
+                       <img src="{{ url_for('static', filename='uploads/profile_pictures/' + user['picture']) }}" alt="Profile Picture">
+                {% else %}
+                       <img src="{{ url_for('static', filename='image/default_profile.png') }}" alt="Default Profile Picture">
+                {% endif %}
+                    <a href="{{ url_for('user_account') }}">{{ user.first_name }}  ({{ user.department}})</a>
+                    <i class="fas fa-chevron-down"></i> <!-- Down arrow icon -->
+                </div>
+                <img src="{{ url_for('static', filename='image/background15.png') }}" alt="Left Image" class="left-image">
+            </div>
+            <div class="send-rewards-container">
+                <div class="center">
+                <section id="send-rewards" class="rewards-section active">
+                    <div class="header">
+                        <h2> Send Rewards </h2>
+                        <div class="points-info">
+                            {% if user.manager == 'yes' %}
+                            <p>Available Points: {{ user.manager_points }}</p>
+                            {% else %}
+                            <p>Available Points: {{ user.available_points }}</p>
+                            {% endif %}
+                            <p>Received Points: {{ user.received_points }}</p>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('send_rewards') }}">
+                        <label for="email_id">Email:</label>
+                        <input type="email" id="email_id" name="email_id" list="email-list" required>
+                        <datalist id="email-list">
+                            {% for email in all_emails %}
+                                <option value="{{ email }}"></option>
+                            {% endfor %}
+                        </datalist><br>
+                        <label for="points_send">Points:</label>
+                        <input type="number" id="points_send" name="points_send" min="1" max="{{ user.manager_points if user.manager == 'yes' else user.available_points }}" required><br>
+                        <label for="comment">Comment:</label>
+                        <textarea id="comment" name="comment" rows="3"></textarea><br>
+                        <button type="submit">Send</button>
+                    </form>
+                </section>
+                <!-- Leaderboard Section -->
+             <section id="leaderboard" class="rewards-section">
+                <h2>Leaderboard</h2>
+                <form action="{{ url_for('leaderboard') }}" method="GET">
+                    <p>Check out the Leaderboard to see the top performers and get inspired by their achievements.</p>
+                    <button type="submit" class="btn"> View Leaderboard</button>
+                </form>
+            </section>
+                <section id="redeem" class="rewards-section">
+                    <h2>Redeem Points</h2>
+                    <form method="POST" action="{{ url_for('redeem_points') }}">
+                        <p style="font-weight: bold;">Received Points: {{ user.received_points }}</p>
+                        <label for="redeem_points">Redeem Points:</label>
+                        <input type="number" id="redeem_points" name="redeem_points" min="1" max="{{ user.received_points }}" required><br>
+                        <button type="submit">Redeem</button>
+                    </form>
+                </section>
+                <section id="help" class="rewards-section">
+                    <h2>Help</h2>
+                    <p>If you have any questions or need assistance.</p>
+                    <p>please contact our support team at support@Rewards.com.</p>
+                </section>
+            </div>
+            </div>
+            <div class="right-side">
+                <div class="leaderboard-tables-container">
+                    <h1>Leaderboard</h1>
+                    <div class="leaderboard-section">
+                        <h2>Top Scorers</h2>
+                        <div class="table-container">
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ranking</th>
+                                        <th class="user-column">Username</th>
+                                        <th>Received points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for scorer in top_scorers %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td class="user-column">{{ scorer.username }}</td>
+                                        <td >{{ scorer.received_points }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="leaderboard-section">
+                        <h2>Most Points Sending Users</h2>
+                        <div class="table-container">
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ranking</th>
+                                        <th class="user-column">Username</th>
+                                        <th>Send Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sender in most_sending_users %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td class="user-column">{{ sender.username }}</td>
+                                        <td>{{ sender.send_count }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="flashMessage"></p>
+        </div>
+    </div>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.rewards-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+                    if (flashMessages.length > 0) {
+                        const modal = document.getElementById('flashModal');
+                        const flashMessageElement = document.getElementById('flashMessage');
+                        const span = document.getElementsByClassName('close')[0];
+
+                        flashMessages.forEach(([category, message]) => {
+                            flashMessageElement.textContent = message;
+                            const modalContent = document.querySelector('.modal-content');
+                            modalContent.classList.remove('success', 'error', 'warning', 'info');
+                            modalContent.classList.add(category);
+                            modal.style.display = 'block';
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = 'none';
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 5000); // Display for 5 seconds
+                    }
+                });
+            </script>
+</body>
+</html>

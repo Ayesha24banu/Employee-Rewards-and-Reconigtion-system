@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <img src="{{ url_for('static', filename='image/admin4.png') }}" alt="Logo"  class="logo">
+            <h1>Admin Dashboard</h1>
+        </header>
+        <div class="admin-body">
+        <aside class="admin-sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#leaderboard">Leaderboard</a></li>
+                    <li><a href="#reset-points">Reset Points</a></li>
+                    <li><a href="#transactions">Transactions History</a></li>
+                    <li><a href="#redeem-data">Redeemed Points History</a></li>
+                    <li><a href="#manage-users">Manage Users</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="logout-btn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="admin-main">
+            <!-- Home Section -->
+            <section id="home" class="admin-section">
+                <h2>Home</h2>
+                <p>Welcome to the Admin Panel. Use the sidebar to navigate through the different sections.</p>
+                <img src="{{ url_for('static', filename='image/admin1.png') }}" alt="Admin Image" class="home-image">
+            </section>
+            
+            <!-- profile Section -->
+            <section id="profile" class="admin-section">
+                <h2>Account Details</h2>
+                <p style="font-weight: 800;">Hello, {{ user['first_name'] }}</p>
+                {% if user['picture'] %}
+                    <img src="{{ url_for('static', filename='uploads/profile_pictures/' + user['picture']) }}" alt="Profile Picture" width="150">
+                {% else %}
+                    <p>No profile picture available.</p>
+                {% endif %}
+                <p><strong>Username:</strong> {{ user['username'] }}</p>
+                <p><strong>First Name:</strong> {{ user['first_name'] }}</p>
+                <p><strong>Last Name:</strong> {{ user['last_name'] }}</p>
+                <p><strong>Email:</strong> {{ user['email_id'] }}</p>
+                <p><strong>Department:</strong> {{ user['department'] }}</p>
+            </section>
+
+            <!-- Transaction Table -->
+            <section id="transactions" class="admin-section">
+                <h2>Transactions History</h2>
+                <div class="form-container">
+                    <form action="{{ url_for('export_transactions') }}" method="POST" class="export-form">
+                        <div class="form-group">
+                            <label for="month">Month:</label>
+                            <input type="text" id="month" name="month" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year:</label>
+                            <input type="text" id="year" name="year" class="form-control">
+                        </div>
+                        <button type="submit" class="btn">Export Transactions</button>
+                    </form>
+                </div>
+                <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Sender Email</th>
+                            <th>Receiver Email</th>
+                            <th>Points Sent</th>
+                            <th>Date</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.id }}</td>
+                            <td>{{ transaction.sender_email }}</td>
+                            <td>{{ transaction.receiver_email }}</td>
+                            <td>{{ transaction.points_send }}</td>
+                            <td>{{ transaction.date }}</td>
+                            <td>{{ transaction.comment }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </section>
+
+            <!-- Redeem Data Table -->
+            <section id="redeem-data" class="admin-section">
+                <h2>Redeemed Points History</h2>
+                <div class="table-header">
+                    <form action="{{ url_for('export_redeem_data') }}" method="POST" class="export-form">
+                        <div class="form-group">
+                            <label for="month">Month:</label>
+                            <input type="text" id="month" name="month" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year:</label>
+                            <input type="text" id="year" name="year" class="form-control">
+                        </div>
+                        <button type="submit" class="btn">Export Redeemed Data</button>
+                    </form>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email ID</th>
+                                <th>Redeemed Points</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in redeem_data %}
+                            <tr>
+                                <td>{{ data.id }}</td>
+                                <td>{{ data.username }}</td>
+                                <td>{{ data.email_id }}</td>
+                                <td>{{ data.redeem_points }}</td>
+                                <td>{{ data.date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Reset Points Section -->
+            <section id="reset-points" class="admin-section">
+                <h2>Reset Points</h2>
+                <p>Periodically, we reset the points within our system to ensure that it remains fair and balanced for all users. This process helps to promote continuous engagement and ensures that everyone has an equal opportunity to earn and utilize points effectively. By resetting points, we aim to prevent any potential accumulation imbalances and maintain the integrity of our reward system.</p>
+                <p>The reset will affect the following points:</p>
+                <ul>
+                    <li><strong>Manager Points:</strong> Points allocated to managers for rewarding team members.</li>
+                    <li><strong>Available Points:</strong> Points currently available for users to use or redeem.</li>
+                </ul>
+                <p>This reset is a crucial part of maintaining the dynamism and fairness of our points system. It encourages regular participation and ensures that the rewards system remains competitive and engaging for all users. Please note that this action is irreversible. Once the points are reset, the previous balances cannot be restored.</p>
+                <p>Please confirm if you would like to proceed with resetting the points. This action cannot be undone.</p>
+                <form action="{{ url_for('admin') }}" method="POST">
+                    <button type="submit" name="reset_points" class="btn">Reset Points</button>
+                </form>
+            </section>
+         
+             <!-- Leaderboard Section -->
+             <section id="leaderboard" class="admin-section">
+                <h2>Leaderboard</h2>
+                <form action="{{ url_for('leaderboard') }}" method="GET">
+                    <button type="submit" class="btn"> View Leaderboard</button>
+                </form>
+            </section>
+
+            <!-- Manage Users Section -->
+            <section id="manage-users" class="admin-section">
+                <h2>Manage Users</h2>
+                <form action="{{ url_for('admin') }}" method="POST">
+                    <button type="submit" name="manage_users" class="btn">View Manage Users</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    </div>
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.admin-sidebar nav ul li a');
+        const sections = document.querySelectorAll('.admin-section');
+    
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                if (!link.classList.contains('logout-btn')) { // Bypass logout 
+                    event.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(targetId).classList.add('active');
+                }    
+            });
+        });
+    
+        // Set the home section as the default active section
+        document.getElementById('home').classList.add('active');
+    });
+   
+    </script>
+    <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="flashMessage"></p>
+        </div>
+    </div>
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+                    if (flashMessages.length > 0) {
+                        const modal = document.getElementById('flashModal');
+                        const flashMessageElement = document.getElementById('flashMessage');
+                        const span = document.getElementsByClassName('close')[0];
+
+                        flashMessages.forEach(([category, message]) => {
+                            flashMessageElement.textContent = message;
+                            const modalContent = document.querySelector('.modal-content');
+                            modalContent.classList.remove('success', 'error', 'warning', 'info');
+                            modalContent.classList.add(category);
+                            modal.style.display = 'block';
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = 'none';
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 5000); // Display for 5 seconds
+                    }
+                });
+    </script>
+</body>
+</html>
