@@ -122,8 +122,8 @@ Please feel free to reach out to me to discuss this project or my skills further
 ## Contact
 - **Author**: Ayesha Banu
 - **Email**: ayeshabanu@example.com
-- **GitHub**: https://github.com/Ayesha24banu
-- **Linkedin**: https://www.linkedin.com/in/ayesha-banu-cs/
+- **GitHub**: [Ayesha24banu](https://github.com/Ayesha24banu)
+- **Linkedin**: [Ayesha Banu](https://www.linkedin.com/in/ayesha-banu-cs/)
 
 ---
 
@@ -173,6 +173,8 @@ Please feel free to reach out to me to discuss this project or my skills further
 
 ![admin manage users](https://github.com/user-attachments/assets/792cd207-ece3-429a-871d-ac9b161cf841)
 
+--- 
 
+![Visitor Badge](https://github.com/Ayesha24banu/Employee-Rewards-and-Reconigtion-system)
 
 
