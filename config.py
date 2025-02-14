@@ -9,7 +9,7 @@ class Config:
     MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', 'Ayesha@990')
     MYSQL_DB = os.getenv('MYSQL_DB', 'employee_reward')
     MYSQL_CURSORCLASS = 'DictCursor'
-    FLASK_ENV = os.getenv('FLASK_ENV')
+    FLASK_DEBUG = os.getenv('FLASK_DEBUG')
     
     # Email configuration
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
