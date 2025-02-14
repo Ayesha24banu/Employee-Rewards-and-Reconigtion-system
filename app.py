@@ -13,7 +13,7 @@ from werkzeug.utils import secure_filename
 
 # Flask app initialization
 app = Flask(__name__, static_folder='static')
-app.config.from_object('config' if os.getenv('FLASK_ENV') != 'testing' else 'config.TestConfig')
+app.config.from_object('config' if os.getenv('FLASK_DEBUG') != 'testing' else 'config.TestConfig')
 app.config['SECRET_KEY'] =os.getenv('SECRET_KEY')  # Retrieve the secret key from environment variables
 app.config['SECURITY_PASSWORD_SALT'] =os.getenv('SECURITY_PASSWORD_SALT')
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
