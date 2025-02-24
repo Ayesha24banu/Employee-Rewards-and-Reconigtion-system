@@ -1,0 +1,15 @@
+Flask==2.2.5
+Flask-MySQLdb==1.0.1
+pandas
+openpyxl
+werkzeug
+Flask-WTF
+xlsxwriter
+pytest
+flask_sqlalchemy
+python-dotenv==0.19.1
+authlib==0.15.3
+Flask-Mail==0.9.1
+bcrypt==3.2.2
+itsdangerous
+Flask-Login==0.6.3

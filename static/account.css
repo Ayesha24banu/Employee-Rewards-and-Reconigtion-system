@@ -1,0 +1,262 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+  
+}
+
+header h1 {
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+header h2 {
+    margin-bottom: 35px;
+}
+
+.left-image {
+    display: block; /* Ensure image is on its own line */
+    margin: 20px auto; /* Center the image */
+    border-radius: 50%; /* Make the image circular */
+    border: 1px solid #ccc; /* Optional: Add a border to the image */
+    width: 110px; /* Set a consistent width for the image */
+    height: 110px; /* Ensure the image remains a circle */
+    position: absolute;
+    left: 110px;
+    margin-top: -2px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -70px;
+    margin-right: 90px;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 50px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+nav ul li a.send-rewards {
+    background-color: #28a745;
+    color: white;
+}
+
+nav ul li a.logout {
+    background-color: #dc3545;
+    color: white;
+}
+
+main {
+    display: flex;
+    margin: 1rem;
+    flex-wrap: wrap;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 300px;
+    margin-right: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center; /* Centers content vertically */
+    text-align: center; /* Centers text content horizontally */
+}
+
+.profile-info img {
+    display: block; /* Ensure image is on its own line */
+    margin: 20px auto; /* Center the image */
+    border-radius: 50%; /* Make the image circular */
+    border: 3px solid #ccc; /* Optional: Add a border to the image */
+    width: 140px; /* Set a consistent width for the image */
+    height: 140px; /* Ensure the image remains a circle */
+}
+
+.update-profile,
+.change-password {
+    flex: 1;
+    min-width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.update-profile {
+    margin-right: 1rem;
+}
+
+section h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+    text-align: center; /* Centers text content horizontally */
+}
+
+section p {
+    line-height: 1.6;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="file"],
+form input[type="submit"],
+form textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+form input[type="password"],
+form textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: -1rem;
+    width: 100%;
+}
+
+/* Adjust the space below Change Password labels */
+.change-password-label {
+    display: block; /* Ensures labels are block-level elements */
+    margin-bottom: 15px; /* Adjust this value as needed to move labels down */
+}
+
+form input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    .profile-info,
+    .update-profile,
+    .change-password {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 25px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content.success {
+    border-color: #28a745;
+    background-color: #28a745;
+    color: #ddd;
+}
+
+.modal-content.error {
+    border-color: #dc3545;
+    color: #ddd;
+    background-color: #dc3545;
+}
+
+.modal-content.info {
+    border-color: #17a2b8;
+    color: #ddd;
+    background-color: #17a2b8;
+}
+
+.modal-content.warning {
+    border-color:#FF7900;
+    background-color: #FF7900;
+    color: #ddd;
+}
+
+/* Password toggle icon */
+.toggle-password {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    transform: translateY(50%);
+}
+
+.toggle-password i {
+    font-size: 1.2em;
+
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,  shrink-to-fit=no">
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='manage_users.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Manage Users</h1>
+            <img src="{{ url_for('static', filename='image/users1.png') }}" alt="Users" class="right-image">
+        </div> 
+        <div class="search-bar">  
+            <form method="get" action="{{ url_for('manage_users') }}">
+                <input type="text" name="search" placeholder="Search by username" value="{{ request.args.get('search', '') }}">
+                <button type="submit">Search</button><br>
+            </form>
+            <a href="{{ url_for('admin') }}" style="float:left;" class="back-link">Back To Admin Page</a>
+        </div>
+        <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>UserProfile Picture</th>
+                    <th>Username</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th class="email-column">Email Id</th>
+                    <th>Department</th>
+                    <th>Manager</th>
+                    <th>Manager Points</th>
+                    <th>Available Points</th>
+                    <th>Received Points</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <form method="post" action="{{ url_for('manage_users') }}">
+                        
+                        <td>
+                            {% if user.picture %}
+                                <img src="{{ url_for('static', filename='uploads/profile_pictures/' + user.picture) }}" alt="Profile Picture" width="50" height="50" style="border-radius: 50%;">
+                            {% else %}
+                                <!-- Show an empty space if no picture is available -->
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ccc;"></div>
+                            {% endif %}
+                        </td>        
+                        <td><input type="text" name="username" value="{{ user.username }}"></td>
+                        <td><input type="text" name="first_name" value="{{ user.first_name }}"></td>
+                        <td><input type="text" name="last_name" value="{{ user.last_name }}"></td>
+                        <td class="email-column"><input type="email" name="email_id" value="{{ user.email_id }}"></td>
+                        <td class="email-column"><input type="text" name="department" value="{{ user.department }}"></td>
+                        <td>
+                            <select  id="manager" name="manager" required >
+                                <option value="yes" {% if user.manager == 'yes' %}selected{% endif %}>Yes</option>
+                                <option value="no" {% if user.manager == 'no' %}selected{% endif %}>No</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="manager_points" value="{{ user.manager_points }}" required></td>
+                        <td><input type="number" name="available_points" value="{{ user.available_points }}" required></td>
+                        <td><input type="number" name="received_points" value="{{ user.received_points }}" required></td>
+                        <td>
+                            <input type="hidden" name="original_username" value="{{ user.username }}">
+                            <button type="submit" name="update_user" class="btn update" onclick="return confirm('Are you sure you want to update this user?');">Update</button>
+                            <button type="submit" name="delete_user" class="btn delete" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                        </td>
+                    </form>                
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('manage_users', page=page-1, search=request.args.get('search', '')) }}">&laquo; Previous</a>
+            {% endif %}
+            {% if len(users) == per_page %}
+            <a href="{{ url_for('manage_users', page=page+1, search=request.args.get('search', '')) }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div> 
+    <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="flashMessage"></p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+                    if (flashMessages.length > 0) {
+                        const modal = document.getElementById('flashModal');
+                        const flashMessageElement = document.getElementById('flashMessage');
+                        const span = document.getElementsByClassName('close')[0];
+
+                        flashMessages.forEach(([category, message]) => {
+                            flashMessageElement.textContent = message;
+                            const modalContent = document.querySelector('.modal-content');
+                            modalContent.classList.remove('success', 'error', 'warning', 'info');
+                            modalContent.classList.add(category);
+                            modal.style.display = 'block';
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = 'none';
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 5000); // Display for 5 seconds
+                    }
+                });
+    </script>   
+</body>
+</html>

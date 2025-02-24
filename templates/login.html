@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .toggle-password {
+          cursor: pointer;
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          
+        }
+      </style>
+</head>
+<body class="login-body">
+   <div class="login-container-wrapper">
+    <div class="login-container">
+        <header>
+          <img src="{{ url_for('static', filename='image/logo1.png') }}" alt="Logo"  class="logo">
+          <h1>Login</h1>
+        </header>
+
+        <form method="POST" action="{{ url_for('login') }}" class="login-form">
+         
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        
+        <label for="password">Password:</label>
+        <div style="position: relative;">
+            <input type="password" name="password" id="password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+              <i id="togglePasswordIcon" class="fa fa-eye-slash"></i>
+            </span>
+          </div>
+          <a href="{{ url_for('forgot_password') }}" style="float: right;"> Forgot Password?</a>
+          <div class="remember-me-container">
+            <input type="checkbox" id="remember-me" name="remember_me">
+            <label for="remember-me">Remember Me</label>
+          </div>
+
+        <button type="submit">Login</button>
+        </form>
+        <p style="text-align: center;">Don't have an account?<a href="{{ url_for('sign_in') }}">Register here</a>.</p>
+   
+    <script>
+    function togglePasswordVisibility(passwordFieldId) {
+      const passwordField = document.getElementById(passwordFieldId);
+      const icon = document.getElementById('togglePasswordIcon');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      } else {
+        passwordField.type = 'password';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+       
+      }
+    }
+
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </div>
+    <div id="flashModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="flashMessage"></p>
+      </div>
+  </div>
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = JSON.parse('{{ get_flashed_messages(with_categories=True)|tojson|safe }}');
+                    if (flashMessages.length > 0) {
+                        const modal = document.getElementById('flashModal');
+                        const flashMessageElement = document.getElementById('flashMessage');
+                        const span = document.getElementsByClassName('close')[0];
+
+                        flashMessages.forEach(([category, message]) => {
+                            flashMessageElement.textContent = message;
+                            const modalContent = document.querySelector('.modal-content');
+                            modalContent.classList.remove('success', 'error', 'warning', 'info');
+                            modalContent.classList.add(category);
+                            modal.style.display = 'block';
+                        });
+
+                        span.onclick = function() {
+                            modal.style.display = 'none';
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 5000); // Display for 5 seconds
+                    }
+                });
+  </script>
+</body>
+</html>
+
