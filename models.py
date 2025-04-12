@@ -8,8 +8,8 @@ def get_db():
     if 'db' not in g:
         g.db = MySQLdb.connect(
             host=os.getenv('MYSQL_HOST', 'localhost'),
-            user=os.getenv('MYSQL_USER', 'root'),
-            password=os.getenv('MYSQL_PASSWORD', 'Ayesha@990'),
+            user=os.getenv('MYSQL_USER', 'xxxxxxxxxxxxx'),
+            password=os.getenv('MYSQL_PASSWORD', 'Axxxxxxxxxx'),
             db=os.getenv('MYSQL_DB', 'employee_reward'),
             charset='utf8mb4',
             cursorclass=MySQLdb.cursors.DictCursor
