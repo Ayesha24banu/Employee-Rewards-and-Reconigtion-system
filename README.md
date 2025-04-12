@@ -63,7 +63,7 @@ flask run
 
 ---
 
-### **📌 For Hiring Managers **
+### ** 📌 For Hiring Managers **
 If you're a recruiter, this project demonstrates my skills in:
 
 - Full-Stack Development (Python, Flask, MySQL)
@@ -71,6 +71,8 @@ If you're a recruiter, this project demonstrates my skills in:
 - Scalable System Design
 - 🔗 LinkedIn: https://www.linkedin.com/in/ayesha-banu-cs
 - 📩 Email: ayesha24banu@gmail.com
+
+---
 
 ### **📷 Screenshots**
 ![home page](https://github.com/user-attachments/assets/0e5003d5-87de-4059-a67d-dfbcf9272546)
@@ -116,6 +118,8 @@ If you're a recruiter, this project demonstrates my skills in:
 ![redeem excel](https://github.com/user-attachments/assets/ba5bb643-30c7-4182-a288-3467bb263962)
 
 ![admin manage users](https://github.com/user-attachments/assets/f1770d48-ea8f-4838-8ee0-bd216ff09ae3)
+
+---
 
 ### **📞 Contact Me**
 If you have any questions, feel free to reach out! 😊
