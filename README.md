@@ -52,7 +52,7 @@ flask run
 
 ---
 
-### **⚠ License & Usage Restrictions**
+## **⚠ License & Usage Restrictions**
 - © 2025 Ayesha Banu. All rights reserved.
 - This project is licensed under Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0).
 - ✔ Personal & Educational Use Only
@@ -63,7 +63,7 @@ flask run
 
 ---
 
-### ** 📌 For Hiring Managers **
+## ** 📌 For Hiring Managers **
 If you're a recruiter, this project demonstrates my skills in:
 
 - Full-Stack Development (Python, Flask, MySQL)
@@ -74,7 +74,14 @@ If you're a recruiter, this project demonstrates my skills in:
 
 ---
 
-### **📷 Screenshots**
+## **📷 Execution Vedio**
+
+https://github.com/user-attachments/assets/06e73824-2251-4fc7-810e-5d1a73e38ff2
+
+
+---
+
+## **📷 Screenshots**
 ![home page](https://github.com/user-attachments/assets/0e5003d5-87de-4059-a67d-dfbcf9272546)
 
 ![register page](https://github.com/user-attachments/assets/1f9a3ff4-3655-45a9-80dd-81009222113d)
@@ -121,7 +128,7 @@ If you're a recruiter, this project demonstrates my skills in:
 
 ---
 
-### **📞 Contact Me**
+## **📞 Contact Me**
 If you have any questions, feel free to reach out! 😊
 
 
