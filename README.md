@@ -15,7 +15,7 @@ The **Employee Rewards and Recognition System** is a web-based platform designed
 - **Frontend:** HTML, CSS, JavaScript  
 - **Database:** MySQL  
 - **Version Control:** GitHub  
-
+- **Editor:** VS Code 
 ---
 
 ## 📥 Installation & Setup  
